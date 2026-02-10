@@ -10,7 +10,7 @@ const notifications = [
     { city: 'Ajijic', type: 'evento social', time: 'hace 12 min' },
     { city: 'Jocotepec', type: 'boda', time: 'hace 15 min' },
     { city: 'Zapopan', type: 'evento corporativo', time: 'hace 22 min' },
-    { city: 'Tlaquepaque', type: 'fiesta de graduación', time: 'hace 27 min' },
+    { city: 'Tlaquepaque', type: 'graduación', time: 'hace 27 min' },
 ];
 
 export function UrgencyBanner() {
@@ -18,26 +18,16 @@ export function UrgencyBanner() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const initialDelay = setTimeout(() => {
-            setIsVisible(true);
-        }, 5000);
-
+        const initialDelay = setTimeout(() => setIsVisible(true), 5000);
         const interval = setInterval(() => {
             setIsVisible(false);
             setTimeout(() => {
                 setCurrentIndex((prev) => (prev + 1) % notifications.length);
                 setIsVisible(true);
             }, 1000);
-
-            setTimeout(() => {
-                setIsVisible(false);
-            }, 6000);
+            setTimeout(() => setIsVisible(false), 6000);
         }, 15000);
-
-        return () => {
-            clearTimeout(initialDelay);
-            clearInterval(interval);
-        };
+        return () => { clearTimeout(initialDelay); clearInterval(interval); };
     }, []);
 
     const notification = notifications[currentIndex];
@@ -51,22 +41,21 @@ export function UrgencyBanner() {
                     exit={{ x: 400, opacity: 0 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40
-            glass rounded-xl px-4 py-3 shadow-xl max-w-sm cursor-pointer
-            border-[var(--accent)]/30 hover:border-[var(--accent)]/50 transition-colors"
+                    glass px-4 py-3 shadow-xl max-w-sm cursor-pointer"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--green-dark)] flex items-center justify-center flex-shrink-0">
-                            <Bell className="w-5 h-5 text-[var(--black)]" />
+                        <div className="w-9 h-9 rounded-full bg-[var(--bg-card)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                            <Bell className="w-4 h-4 text-[var(--accent-dark)]" />
                         </div>
                         <div>
-                            <p className="text-sm text-white" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                                <span className="font-semibold">Alguien de {notification.city}</span>{' '}
-                                acaba de cotizar una{' '}
-                                <span className="text-[var(--accent)] font-medium">{notification.type}</span>
+                            <p className="text-xs text-[var(--text)]" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <span className="font-medium">Alguien de {notification.city}</span>{' '}
+                                cotizó una{' '}
+                                <span className="text-[var(--accent)]">{notification.type}</span>
                             </p>
                             <div className="flex items-center gap-1 mt-1">
-                                <MapPin className="w-3 h-3 text-gray-500" />
-                                <span className="text-xs text-gray-500">{notification.time}</span>
+                                <MapPin className="w-2.5 h-2.5 text-[var(--text-dim)]" />
+                                <span className="text-[10px] text-[var(--text-dim)]">{notification.time}</span>
                             </div>
                         </div>
                     </div>
