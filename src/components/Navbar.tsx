@@ -31,7 +31,7 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <a href="#hero" className="flex items-center gap-2">
-                    <span className="text-lg font-medium tracking-[0.05em] text-[var(--accent)]"
+                    <span className="text-xl font-bold gradient-text"
                         style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         El Paraíso
                     </span>
@@ -43,7 +43,7 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                         <a
                             key={link.href}
                             href={link.href}
-                            className="text-xs tracking-[0.15em] uppercase text-[var(--text-muted)]
+                            className="text-sm text-[var(--text-muted)]
                                hover:text-[var(--accent)] transition-colors duration-300"
                             style={{ fontFamily: "'Outfit', sans-serif" }}
                         >
@@ -52,9 +52,10 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                     ))}
                     <button
                         onClick={onOpenWizard}
-                        className="px-5 py-2 text-xs tracking-[0.15em] uppercase font-medium
-              border border-[var(--accent-dark)] text-[var(--accent)]
-              hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-300"
+                        className="px-5 py-2 rounded-full text-sm font-semibold
+              bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)]
+              text-[var(--bg)] hover:from-[var(--accent-light)] hover:to-[var(--accent)]
+              transition-all shadow-[0_0_16px_rgba(201,185,154,0.2)]"
                         style={{ fontFamily: "'Outfit', sans-serif" }}
                     >
                         Agendar Visita
@@ -84,15 +85,16 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                                 key={link.href}
                                 href={link.href}
                                 onClick={() => setIsMobileOpen(false)}
-                                className="block text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition py-1 tracking-wide"
+                                className="block text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition py-1"
                             >
                                 {link.label}
                             </a>
                         ))}
                         <button
                             onClick={() => { setIsMobileOpen(false); onOpenWizard(); }}
-                            className="w-full py-3 text-xs tracking-[0.15em] uppercase font-medium
-                bg-[var(--accent)] text-[var(--bg)] transition-all mt-2"
+                            className="w-full py-3 rounded-full text-sm font-semibold
+                bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)]
+                text-[var(--bg)] transition-all mt-2"
                         >
                             Agendar Visita
                         </button>

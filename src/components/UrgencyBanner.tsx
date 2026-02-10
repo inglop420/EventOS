@@ -41,21 +41,22 @@ export function UrgencyBanner() {
                     exit={{ x: 400, opacity: 0 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40
-                    glass px-4 py-3 shadow-xl max-w-sm cursor-pointer"
+                    glass px-5 py-4 rounded-2xl shadow-2xl max-w-sm cursor-pointer border border-[var(--border)]/50
+                    hover:scale-105 transition-transform duration-300"
                 >
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[var(--bg-card)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                            <Bell className="w-4 h-4 text-[var(--accent-dark)]" />
+                    <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0 animate-pulse">
+                            <Bell className="w-5 h-5 text-[var(--accent)]" />
                         </div>
                         <div>
-                            <p className="text-xs text-[var(--text)]" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                                <span className="font-medium">Alguien de {notification.city}</span>{' '}
+                            <p className="text-sm text-[var(--text)] font-medium leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                <span className="font-bold">Alguien de {notification.city}</span>{' '}
                                 cotizó una{' '}
-                                <span className="text-[var(--accent)]">{notification.type}</span>
+                                <span className="text-[var(--accent)] font-bold">{notification.type}</span>
                             </p>
-                            <div className="flex items-center gap-1 mt-1">
-                                <MapPin className="w-2.5 h-2.5 text-[var(--text-dim)]" />
-                                <span className="text-[10px] text-[var(--text-dim)]">{notification.time}</span>
+                            <div className="flex items-center gap-1.5 mt-1">
+                                <MapPin className="w-3 h-3 text-[var(--text-muted)]" />
+                                <span className="text-xs text-[var(--text-muted)] font-medium tracking-wide">{notification.time}</span>
                             </div>
                         </div>
                     </div>

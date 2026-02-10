@@ -18,51 +18,54 @@ const services = [
 
 export function ServicesSection() {
     return (
-        <section className="py-24 px-4 relative" id="servicios">
+        <section className="py-20 px-4 relative" id="servicios">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <p className="text-xs tracking-[0.3em] uppercase text-[var(--accent-dark)] mb-4"
+                    <p className="text-sm tracking-widest uppercase text-[var(--accent-dark)] mb-2"
                         style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Servicios
                     </p>
-                    <div className="line-accent mb-6" />
-                    <h2 className="text-3xl md:text-5xl font-medium mb-4"
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4"
                         style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         Todo para un{' '}
-                        <span className="gradient-text italic">evento perfecto</span>
+                        <span className="gradient-text">evento perfecto</span>
                     </h2>
-                    <p className="text-[var(--text-muted)] max-w-lg mx-auto text-sm leading-relaxed"
-                        style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300 }}>
+                    <p className="text-[var(--text-muted)] max-w-lg mx-auto"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Un jardín diseñado para crear momentos que trascienden
                     </p>
                 </motion.div>
 
                 {/* Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)]">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {services.map((s, i) => {
                         const Icon = s.icon;
                         return (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.06 }}
-                                className="group bg-[var(--bg)] p-8 hover:bg-[var(--bg-card)] transition-all duration-500 cursor-default"
+                                transition={{ delay: i * 0.08 }}
+                                className="group glass rounded-xl p-6 hover:border-[var(--accent)]/30 transition-all duration-300
+                                    hover:shadow-[0_0_20px_rgba(201,185,154,0.08)]"
                             >
-                                <Icon className="w-5 h-5 text-[var(--accent-dark)] mb-5 group-hover:text-[var(--accent)] transition-colors duration-500" />
-                                <h3 className="text-base font-medium text-[var(--text)] mb-2 group-hover:text-[var(--accent)] transition-colors duration-500"
-                                    style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.15rem' }}>
+                                <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center mb-4
+                                    group-hover:bg-[var(--accent)]/20 transition-colors">
+                                    <Icon className="w-6 h-6 text-[var(--accent)]" />
+                                </div>
+                                <h3 className="text-lg font-semibold text-[var(--text)] mb-2"
+                                    style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                                     {s.title}
                                 </h3>
-                                <p className="text-xs text-[var(--text-dim)] leading-relaxed"
-                                    style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300 }}>
+                                <p className="text-sm text-[var(--text-muted)] leading-relaxed"
+                                    style={{ fontFamily: "'Outfit', sans-serif" }}>
                                     {s.description}
                                 </p>
                             </motion.div>
