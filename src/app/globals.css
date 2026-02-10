@@ -2,19 +2,36 @@
 
 
 :root {
-  --gold: #C8A951;
-  --gold-light: #E8D48B;
-  --gold-dark: #A68A3E;
-  --green-dark: #1A3A0A;
-  --green: #2D5016;
-  --green-light: #4A7A2E;
-  --cream: #FFF8E7;
-  --cream-dark: #F5ECD4;
-  --black: #0A0A0A;
-  --black-light: #1A1A1A;
-  --white: #FAFAFA;
-  --orange-cta: #E87A1E;
-  --orange-hover: #FF9340;
+  /* ── Premium Emerald & Rose Palette ── */
+  --accent: #34D399;
+  --accent-light: #6EE7B7;
+  --accent-dark: #059669;
+  --accent-glow: rgba(52, 211, 153, 0.35);
+
+  --rose: #F472B6;
+  --rose-light: #FBCFE8;
+  --rose-dark: #DB2777;
+
+  --green-dark: #064E3B;
+  --green: #065F46;
+  --green-light: #10B981;
+
+  --cream: #F0FDF4;
+  --cream-dark: #D1FAE5;
+
+  --black: #050A08;
+  --black-light: #0F1A16;
+  --white: #F0FFF4;
+
+  --cta: #F472B6;
+  --cta-hover: #F9A8D4;
+
+  /* Legacy compatibility */
+  --gold: var(--accent);
+  --gold-light: var(--accent-light);
+  --gold-dark: var(--accent-dark);
+  --orange-cta: var(--cta);
+  --orange-hover: var(--cta-hover);
 }
 
 * {
@@ -28,7 +45,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
   color: var(--white);
   background: var(--black);
   overflow-x: hidden;
@@ -40,12 +57,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-weight: 600;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -53,7 +71,7 @@ h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
   border-radius: 3px;
 }
 
@@ -69,38 +87,40 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
   border: 1px solid transparent;
 }
 
 .calendar-day:hover:not(.disabled):not(.blocked) {
-  background: rgba(200, 169, 81, 0.2);
-  border-color: var(--gold);
+  background: rgba(52, 211, 153, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.1);
 }
 
 .calendar-day.selected {
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   color: var(--black);
   font-weight: 600;
+  box-shadow: 0 2px 12px rgba(52, 211, 153, 0.3);
 }
 
 .calendar-day.blocked {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   cursor: not-allowed;
   text-decoration: line-through;
 }
 
 .calendar-day.disabled {
-  opacity: 0.3;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 
 .calendar-day.today {
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 
 /* Wizard Step Indicator */
@@ -115,23 +135,24 @@ h6 {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 0.3s;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(.4, 0, .2, 1);
 }
 
 .step-dot.active {
-  background: var(--gold);
-  width: 30px;
-  border-radius: 5px;
+  background: linear-gradient(135deg, var(--accent), var(--rose));
+  width: 32px;
+  border-radius: 6px;
+  box-shadow: 0 0 16px var(--accent-glow);
 }
 
 .step-dot.completed {
-  background: var(--green-light);
+  background: var(--accent);
 }
 
 /* Chat bubbles */
 .chat-bubble-user {
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   color: var(--black);
   border-radius: 18px 18px 4px 18px;
   padding: 10px 16px;
@@ -145,26 +166,26 @@ h6 {
   border-radius: 18px 18px 18px 4px;
   padding: 10px 16px;
   max-width: 80%;
-  border: 1px solid rgba(200, 169, 81, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.15);
 }
 
-/* Glassmorphism */
+/* ── Glassmorphism ── */
 .glass {
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200, 169, 81, 0.15);
+  background: rgba(10, 25, 18, 0.75);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(52, 211, 153, 0.12);
 }
 
-/* Gradient text */
+/* ── Premium Gradient Text ── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+  background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--rose));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Shimmer animation */
+/* ── Shimmer animation ── */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -176,7 +197,7 @@ h6 {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(200, 169, 81, 0.1) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(52, 211, 153, 0.08) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
 }
@@ -214,30 +235,30 @@ h6 {
   animation: slideOutRight 0.5s ease-in forwards;
 }
 
-/* Pulse */
-@keyframes pulse-gold {
+/* ── Pulse glow ── */
+@keyframes pulse-accent {
 
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(200, 169, 81, 0.4);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
   }
 
   50% {
-    box-shadow: 0 0 0 15px rgba(200, 169, 81, 0);
+    box-shadow: 0 0 0 16px rgba(52, 211, 153, 0);
   }
 }
 
 .pulse-gold {
-  animation: pulse-gold 2s infinite;
+  animation: pulse-accent 2.5s infinite;
 }
 
 /* Stars */
 .star-rating {
-  color: var(--gold);
+  color: var(--accent);
   letter-spacing: 2px;
 }
 
-/* Image carousel */
+/* ── Stories carousel ── */
 .stories-carousel {
   display: flex;
   gap: 12px;
@@ -255,4 +276,25 @@ h6 {
 .story-card {
   scroll-snap-align: center;
   flex-shrink: 0;
+}
+
+/* ── Ambient glow background decorations ── */
+.glow-emerald {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-rose {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
 }

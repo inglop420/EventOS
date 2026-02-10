@@ -18,7 +18,6 @@ export function UrgencyBanner() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // Initial delay before first notification
         const initialDelay = setTimeout(() => {
             setIsVisible(true);
         }, 5000);
@@ -30,7 +29,6 @@ export function UrgencyBanner() {
                 setIsVisible(true);
             }, 1000);
 
-            // Hide after 5 seconds
             setTimeout(() => {
                 setIsVisible(false);
             }, 6000);
@@ -54,17 +52,17 @@ export function UrgencyBanner() {
                     transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40
             glass rounded-xl px-4 py-3 shadow-xl max-w-sm cursor-pointer
-            border-[var(--gold)]/30 hover:border-[var(--gold)]/50 transition-colors"
+            border-[var(--accent)]/30 hover:border-[var(--accent)]/50 transition-colors"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--green)] to-[var(--green-dark)] flex items-center justify-center flex-shrink-0">
-                            <Bell className="w-5 h-5 text-[var(--gold)]" />
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--green-dark)] flex items-center justify-center flex-shrink-0">
+                            <Bell className="w-5 h-5 text-[var(--black)]" />
                         </div>
                         <div>
-                            <p className="text-sm text-white">
+                            <p className="text-sm text-white" style={{ fontFamily: "'Outfit', sans-serif" }}>
                                 <span className="font-semibold">Alguien de {notification.city}</span>{' '}
                                 acaba de cotizar una{' '}
-                                <span className="text-[var(--gold)] font-medium">{notification.type}</span>
+                                <span className="text-[var(--accent)] font-medium">{notification.type}</span>
                             </p>
                             <div className="flex items-center gap-1 mt-1">
                                 <MapPin className="w-3 h-3 text-gray-500" />

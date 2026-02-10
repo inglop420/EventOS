@@ -26,14 +26,14 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? 'glass shadow-lg'
-                    : 'bg-transparent'
+                ? 'glass shadow-lg'
+                : 'bg-transparent'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
                 {/* Logo */}
                 <a href="#hero" className="flex items-center gap-2">
-                    <span className="text-xl font-bold gradient-text" style={{ fontFamily: "'Playfair Display', serif" }}>
+                    <span className="text-xl font-bold gradient-text" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         El Paraíso
                     </span>
                 </a>
@@ -44,7 +44,8 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                         <a
                             key={link.href}
                             href={link.href}
-                            className="text-sm text-gray-300 hover:text-[var(--gold)] transition font-medium"
+                            className="text-sm text-gray-300 hover:text-[var(--accent)] transition font-medium"
+                            style={{ fontFamily: "'Outfit', sans-serif" }}
                         >
                             {link.label}
                         </a>
@@ -52,9 +53,10 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                     <button
                         onClick={onOpenWizard}
                         className="px-5 py-2 rounded-full text-sm font-semibold
-              bg-gradient-to-r from-[var(--gold)] to-[var(--gold-dark)]
-              text-[var(--black)] hover:from-[var(--gold-light)] hover:to-[var(--gold)]
-              transition-all"
+              bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)]
+              text-[var(--black)] hover:from-[var(--accent-light)] hover:to-[var(--accent)]
+              transition-all shadow-[0_0_16px_rgba(52,211,153,0.2)]"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}
                     >
                         Agendar Visita
                     </button>
@@ -83,7 +85,7 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                                 key={link.href}
                                 href={link.href}
                                 onClick={() => setIsMobileOpen(false)}
-                                className="block text-gray-300 hover:text-[var(--gold)] transition py-2 font-medium"
+                                className="block text-gray-300 hover:text-[var(--accent)] transition py-2 font-medium"
                             >
                                 {link.label}
                             </a>
@@ -94,7 +96,7 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                                 onOpenWizard();
                             }}
                             className="w-full py-3 rounded-full text-sm font-semibold
-                bg-gradient-to-r from-[var(--gold)] to-[var(--gold-dark)]
+                bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)]
                 text-[var(--black)] transition-all mt-2"
                         >
                             Agendar Visita 📅

@@ -28,12 +28,13 @@ export function StickyCTA({ onOpenWizard }: { onOpenWizard: () => void }) {
                         <button
                             onClick={onOpenWizard}
                             className="w-full py-3.5 rounded-full text-base font-semibold
-                bg-gradient-to-r from-[var(--orange-cta)] to-[var(--orange-hover)]
-                text-white shadow-[0_-4px_30px_rgba(232,122,30,0.3)]
+                bg-gradient-to-r from-[var(--rose)] to-[var(--rose-dark)]
+                text-white shadow-[0_-4px_30px_rgba(244,114,182,0.25)]
                 active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                            style={{ fontFamily: "'Outfit', sans-serif" }}
                         >
                             <Calendar className="w-5 h-5" />
-                            Verificar Disponibilidad 📅
+                            Verificar Disponibilidad
                         </button>
                     </div>
                 </motion.div>

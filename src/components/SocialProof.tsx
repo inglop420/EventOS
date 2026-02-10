@@ -50,7 +50,8 @@ export function SocialProofSection() {
     return (
         <section className="py-20 px-4 relative overflow-hidden" id="galeria">
             {/* Background decoration */}
-            <div className="absolute top-0 left-0 w-96 h-96 bg-[var(--gold)]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-0 left-0 w-96 h-96 bg-[var(--accent)]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-72 h-72 bg-[var(--rose)]/3 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
 
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
@@ -60,14 +61,17 @@ export function SocialProofSection() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <span className="text-[var(--gold)] text-sm tracking-[0.2em] uppercase font-medium">
+                    <span className="text-[var(--accent)] text-sm tracking-[0.2em] uppercase font-medium"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Historias de Éxito
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+                    <h2 className="text-3xl md:text-5xl font-semibold mt-3 mb-4"
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         Eventos que se convierten en{' '}
                         <span className="gradient-text">recuerdos eternos</span>
                     </h2>
-                    <p className="text-gray-400 max-w-xl mx-auto">
+                    <p className="text-gray-400 max-w-xl mx-auto"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Más de 500 familias han celebrado sus momentos más importantes con nosotros
                     </p>
                 </motion.div>
@@ -85,8 +89,8 @@ export function SocialProofSection() {
                                 className="story-card w-[200px] md:w-[260px] flex-shrink-0"
                             >
                                 <div className="relative rounded-2xl overflow-hidden group cursor-pointer">
-                                    {/* Gold ring border like Instagram */}
-                                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[var(--gold)] via-[var(--orange-cta)] to-[var(--gold-light)] p-[2px]">
+                                    {/* Gradient ring border */}
+                                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[var(--accent)] via-[var(--rose)] to-[var(--accent-light)] p-[2px]">
                                         <div className="w-full h-full rounded-2xl bg-[var(--black)]" />
                                     </div>
                                     <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--green-dark)] to-[var(--black)] rounded-2xl overflow-hidden m-[3px]">
@@ -98,7 +102,10 @@ export function SocialProofSection() {
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                                         <div className="absolute bottom-4 left-4 right-4">
-                                            <p className="text-sm font-medium text-white">{img.label}</p>
+                                            <p className="text-sm font-medium text-white"
+                                                style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                                {img.label}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -116,29 +123,35 @@ export function SocialProofSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.15 }}
-                            className="glass rounded-2xl p-6 hover:border-[var(--gold)]/30 transition-all duration-300 group"
+                            className="glass rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-all duration-300 group"
                         >
                             <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] flex items-center justify-center flex-shrink-0">
-                                    <span className="text-[var(--black)] font-bold text-lg">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center flex-shrink-0">
+                                    <span className="text-[var(--black)] font-bold text-lg"
+                                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                                         {t.name.charAt(0)}
                                     </span>
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between mb-1">
-                                        <h4 className="font-semibold text-white">{t.name}</h4>
-                                        <span className="text-xs px-3 py-1 rounded-full bg-[var(--gold)]/10 text-[var(--gold)] border border-[var(--gold)]/20">
+                                        <h4 className="font-semibold text-white"
+                                            style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                                            {t.name}
+                                        </h4>
+                                        <span className="text-xs px-3 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20"
+                                            style={{ fontFamily: "'Outfit', sans-serif" }}>
                                             {t.event}
                                         </span>
                                     </div>
                                     <div className="flex gap-1 mb-3">
                                         {Array.from({ length: t.rating }).map((_, j) => (
-                                            <Star key={j} className="w-4 h-4 text-[var(--gold)]" fill="currentColor" />
+                                            <Star key={j} className="w-4 h-4 text-[var(--accent)]" fill="currentColor" />
                                         ))}
                                     </div>
                                     <div className="relative">
-                                        <Quote className="w-6 h-6 text-[var(--gold)]/20 absolute -top-1 -left-1" />
-                                        <p className="text-gray-300 text-sm leading-relaxed pl-4">
+                                        <Quote className="w-6 h-6 text-[var(--accent)]/20 absolute -top-1 -left-1" />
+                                        <p className="text-gray-300 text-sm leading-relaxed pl-4"
+                                            style={{ fontFamily: "'Outfit', sans-serif" }}>
                                             {t.text}
                                         </p>
                                     </div>

@@ -15,19 +15,22 @@ export function Footer({ onOpenWizard }: { onOpenWizard: () => void }) {
                     viewport={{ once: true }}
                     className="relative max-w-3xl mx-auto text-center"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                    <h2 className="text-3xl md:text-5xl font-semibold mb-4"
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         ¿Listo para crear{' '}
                         <span className="gradient-text">tu momento mágico</span>?
                     </h2>
-                    <p className="text-gray-400 mb-8 text-lg">
+                    <p className="text-gray-400 mb-8 text-lg"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         No dejes que otro se quede con tu fecha soñada. Verifica disponibilidad ahora.
                     </p>
                     <button
                         onClick={onOpenWizard}
                         className="px-10 py-4 rounded-full text-lg font-semibold
-              bg-gradient-to-r from-[var(--orange-cta)] to-[var(--orange-hover)]
-              text-white hover:shadow-[0_0_40px_rgba(232,122,30,0.4)]
+              bg-gradient-to-r from-[var(--rose)] to-[var(--rose-dark)]
+              text-white hover:shadow-[0_0_40px_rgba(244,114,182,0.3)]
               transform hover:scale-105 transition-all duration-300"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}
                     >
                         Verificar Disponibilidad 📅
                     </button>
@@ -40,10 +43,11 @@ export function Footer({ onOpenWizard }: { onOpenWizard: () => void }) {
                     <div className="grid md:grid-cols-3 gap-10">
                         {/* Brand */}
                         <div>
-                            <h3 className="text-xl font-bold gradient-text mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+                            <h3 className="text-xl font-bold gradient-text mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                                 Jardín El Paraíso
                             </h3>
-                            <p className="text-sm text-gray-400 leading-relaxed">
+                            <p className="text-sm text-gray-400 leading-relaxed"
+                                style={{ fontFamily: "'Outfit', sans-serif" }}>
                                 El jardín de eventos más exclusivo de Chapala, Jalisco.
                                 Donde los sueños se celebran con vista al Lago de Chapala.
                             </p>
@@ -53,58 +57,63 @@ export function Footer({ onOpenWizard }: { onOpenWizard: () => void }) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-white/5 border border-white/10
-                    flex items-center justify-center hover:border-[var(--gold)] hover:bg-[var(--gold)]/10 transition"
+                    flex items-center justify-center hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
                                 >
-                                    <Facebook className="w-4 h-4 text-gray-400 hover:text-[var(--gold)]" />
+                                    <Facebook className="w-4 h-4 text-gray-400" />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-10 h-10 rounded-full bg-white/5 border border-white/10
-                    flex items-center justify-center hover:border-[var(--gold)] hover:bg-[var(--gold)]/10 transition"
+                    flex items-center justify-center hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
                                 >
-                                    <Instagram className="w-4 h-4 text-gray-400 hover:text-[var(--gold)]" />
+                                    <Instagram className="w-4 h-4 text-gray-400" />
                                 </a>
                                 <a
                                     href="mailto:info@jardinelparaiso.com"
                                     className="w-10 h-10 rounded-full bg-white/5 border border-white/10
-                    flex items-center justify-center hover:border-[var(--gold)] hover:bg-[var(--gold)]/10 transition"
+                    flex items-center justify-center hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
                                 >
-                                    <Mail className="w-4 h-4 text-gray-400 hover:text-[var(--gold)]" />
+                                    <Mail className="w-4 h-4 text-gray-400" />
                                 </a>
                             </div>
                         </div>
 
                         {/* Contact Info */}
                         <div>
-                            <h4 className="text-sm font-semibold text-[var(--gold)] uppercase tracking-wider mb-4">
+                            <h4 className="text-sm font-semibold text-[var(--accent)] uppercase tracking-wider mb-4"
+                                style={{ fontFamily: "'Outfit', sans-serif" }}>
                                 Contacto
                             </h4>
                             <ul className="space-y-3">
                                 <li className="flex items-start gap-3">
-                                    <MapPin className="w-4 h-4 text-[var(--gold)] mt-1 flex-shrink-0" />
-                                    <span className="text-sm text-gray-400">
+                                    <MapPin className="w-4 h-4 text-[var(--accent)] mt-1 flex-shrink-0" />
+                                    <span className="text-sm text-gray-400"
+                                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                                         Chapala, Jalisco, México<br />
                                         A orillas del Lago de Chapala
                                     </span>
                                 </li>
                                 <li className="flex items-center gap-3">
-                                    <Phone className="w-4 h-4 text-[var(--gold)] flex-shrink-0" />
-                                    <a href="tel:+523312345678" className="text-sm text-gray-400 hover:text-[var(--gold)] transition">
+                                    <Phone className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
+                                    <a href="tel:+523312345678" className="text-sm text-gray-400 hover:text-[var(--accent)] transition"
+                                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                                         +52 33 1234 5678
                                     </a>
                                 </li>
                                 <li className="flex items-center gap-3">
-                                    <Clock className="w-4 h-4 text-[var(--gold)] flex-shrink-0" />
-                                    <span className="text-sm text-gray-400">
+                                    <Clock className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
+                                    <span className="text-sm text-gray-400"
+                                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                                         Visitas con cita previa · L-D
                                     </span>
                                 </li>
                             </ul>
                         </div>
 
-                        {/* Map embed placeholder */}
+                        {/* Map embed */}
                         <div>
-                            <h4 className="text-sm font-semibold text-[var(--gold)] uppercase tracking-wider mb-4">
+                            <h4 className="text-sm font-semibold text-[var(--accent)] uppercase tracking-wider mb-4"
+                                style={{ fontFamily: "'Outfit', sans-serif" }}>
                                 Ubicación
                             </h4>
                             <div className="rounded-xl overflow-hidden border border-white/10 aspect-[4/3]">
@@ -125,7 +134,8 @@ export function Footer({ onOpenWizard }: { onOpenWizard: () => void }) {
 
                 {/* Bottom bar */}
                 <div className="border-t border-white/5 py-4">
-                    <p className="text-center text-xs text-gray-600">
+                    <p className="text-center text-xs text-gray-600"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         © {new Date().getFullYear()} Jardín El Paraíso. Todos los derechos reservados.
                     </p>
                 </div>

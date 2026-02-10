@@ -62,14 +62,17 @@ export function ServicesSection() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <span className="text-[var(--gold)] text-sm tracking-[0.2em] uppercase font-medium">
+                    <span className="text-[var(--accent)] text-sm tracking-[0.2em] uppercase font-medium"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Nuestros Servicios
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+                    <h2 className="text-3xl md:text-5xl font-semibold mt-3 mb-4"
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         Todo lo que necesitas para un{' '}
                         <span className="gradient-text">evento perfecto</span>
                     </h2>
-                    <p className="text-gray-400 max-w-xl mx-auto">
+                    <p className="text-gray-400 max-w-xl mx-auto"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}>
                         Un jardín diseñado para crear momentos mágicos con todas las comodidades
                     </p>
                 </motion.div>
@@ -85,17 +88,21 @@ export function ServicesSection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.08 }}
-                                className="group glass rounded-2xl p-6 hover:border-[var(--gold)]/30
-                  hover:bg-[var(--gold)]/5 transition-all duration-300 cursor-default"
+                                className="group glass rounded-2xl p-6 hover:border-[var(--accent)]/30
+                   hover:bg-[var(--accent)]/5 transition-all duration-300 cursor-default"
                             >
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--gold)]/20 to-transparent
-                  flex items-center justify-center mb-4 group-hover:from-[var(--gold)]/30 transition-all">
-                                    <Icon className="w-6 h-6 text-[var(--gold)]" />
+                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent)]/20 to-transparent
+                   flex items-center justify-center mb-4 group-hover:from-[var(--accent)]/30 transition-all">
+                                    <Icon className="w-6 h-6 text-[var(--accent)]" />
                                 </div>
-                                <h3 className="font-semibold text-white mb-2 group-hover:text-[var(--gold)] transition">
+                                <h3 className="font-semibold text-white mb-2 group-hover:text-[var(--accent)] transition"
+                                    style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.1rem' }}>
                                     {s.title}
                                 </h3>
-                                <p className="text-sm text-gray-400 leading-relaxed">{s.description}</p>
+                                <p className="text-sm text-gray-400 leading-relaxed"
+                                    style={{ fontFamily: "'Outfit', sans-serif" }}>
+                                    {s.description}
+                                </p>
                             </motion.div>
                         );
                     })}

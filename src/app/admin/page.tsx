@@ -59,7 +59,7 @@ export default function AdminPage() {
                         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] flex items-center justify-center mx-auto mb-4">
                             <Lock className="w-8 h-8 text-[var(--black)]" />
                         </div>
-                        <h1 className="text-xl font-bold gradient-text" style={{ fontFamily: "'Playfair Display', serif" }}>
+                        <h1 className="text-xl font-bold gradient-text" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                             Panel de Administración
                         </h1>
                         <p className="text-sm text-gray-400 mt-1">Jardín El Paraíso</p>
@@ -94,7 +94,7 @@ export default function AdminPage() {
             {/* Header */}
             <header className="glass border-b border-white/10 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
                 <div>
-                    <h1 className="text-lg font-bold gradient-text" style={{ fontFamily: "'Playfair Display', serif" }}>
+                    <h1 className="text-lg font-bold gradient-text" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                         El Paraíso Admin
                     </h1>
                 </div>
