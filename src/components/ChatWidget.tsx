@@ -82,7 +82,7 @@ export default function ChatWidget() {
         <>
             <AnimatePresence>
                 {!isOpen && (
-                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="fixed bottom-6 right-6 z-50">
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="fixed bottom-28 right-6 md:bottom-6 md:right-6 z-50">
                         {showBubble && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="absolute bottom-full right-0 mb-3 whitespace-nowrap">
                                 <div className="glass rounded-full px-4 py-2 text-sm text-[var(--text-muted)] shadow-lg"

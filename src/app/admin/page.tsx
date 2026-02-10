@@ -16,7 +16,7 @@ const MONTHS_ES = [
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
 ];
 
-type AdminTab = 'leads' | 'calendar' | 'precios';
+type AdminTab = 'leads' | 'calendar' | 'precios' | 'paquetes';
 
 function formatCurrency(amount: number) {
     return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', minimumFractionDigits: 0 }).format(amount);
@@ -119,6 +119,7 @@ export default function AdminPage() {
                 <TabButton active={activeTab === 'leads'} onClick={() => setActiveTab('leads')} icon={<Users className="w-4 h-4" />} label="Oportunidades" />
                 <TabButton active={activeTab === 'calendar'} onClick={() => setActiveTab('calendar')} icon={<CalendarDays className="w-4 h-4" />} label="Calendario" />
                 <TabButton active={activeTab === 'precios'} onClick={() => setActiveTab('precios')} icon={<DollarSign className="w-4 h-4" />} label="Precios" />
+                <TabButton active={activeTab === 'paquetes'} onClick={() => setActiveTab('paquetes')} icon={<Package className="w-4 h-4" />} label="Paquetes" />
             </div>
 
             {/* Content */}
@@ -126,6 +127,7 @@ export default function AdminPage() {
                 {activeTab === 'leads' && <LeadsTab />}
                 {activeTab === 'calendar' && <CalendarTab />}
                 {activeTab === 'precios' && <PreciosTab />}
+                {activeTab === 'paquetes' && <PackagesTab />}
             </div>
         </div>
     );
@@ -930,6 +932,381 @@ function PreciosTab() {
             </div>
         </div>
     );
+}
+
+// ─────────────────────── Packages Tab ───────────────────────
+
+function PackagesTab() {
+    const [packages, setPackages] = useState<import('@/lib/supabase').Package[]>([]);
+    const [services, setServices] = useState<ServiceCatalog[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    // Form State
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [formName, setFormName] = useState('');
+    const [formDesc, setFormDesc] = useState('');
+    const [formPrice, setFormPrice] = useState('');
+    const [formGuests, setFormGuests] = useState('');
+    const [formType, setFormType] = useState('general');
+    const [formServices, setFormServices] = useState<string[]>([]); // Array of service IDs
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            // Fetch Packages
+            const { data: pkgData } = await supabase
+                .from('packages')
+                .select('*')
+                .order('sort_order');
+
+            if (pkgData) setPackages(pkgData);
+            else setPackages(getDemoPackages());
+
+            // Fetch Services for selector
+            const { data: svcData } = await supabase
+                .from('services_catalog')
+                .select('*')
+                .eq('is_active', true)
+                .order('category')
+                .order('name');
+
+            if (svcData) setServices(svcData);
+        } catch {
+            setPackages(getDemoPackages());
+        }
+        setLoading(false);
+    };
+
+    const resetForm = () => {
+        setEditingId(null);
+        setFormName('');
+        setFormDesc('');
+        setFormPrice('');
+        setFormGuests('');
+        setFormType('general');
+        setFormServices([]);
+        setShowAddForm(false);
+    };
+
+    const startEdit = (pkg: import('@/lib/supabase').Package) => {
+        setEditingId(pkg.id);
+        setFormName(pkg.name);
+        setFormDesc(pkg.description || '');
+        setFormPrice(String(pkg.total_price));
+        setFormGuests(String(pkg.max_guests));
+        setFormType(pkg.event_type);
+        setFormServices(pkg.includes_services || []); // Ensure array
+        setShowAddForm(true);
+    };
+
+    const handleServiceToggle = (serviceId: string) => {
+        setFormServices(prev =>
+            prev.includes(serviceId)
+                ? prev.filter(id => id !== serviceId)
+                : [...prev, serviceId]
+        );
+    };
+
+    const handleSave = async () => {
+        if (!formName || !formPrice) return;
+        setSaving(true);
+
+        const newPackage = {
+            name: formName,
+            description: formDesc,
+            total_price: parseFloat(formPrice),
+            max_guests: parseInt(formGuests) || 0,
+            event_type: formType,
+            includes_services: formServices,
+            updated_at: new Date().toISOString(),
+        };
+
+        try {
+            if (editingId) {
+                // Update
+                await supabase.from('packages').update(newPackage).eq('id', editingId);
+                setPackages(prev => prev.map(p => p.id === editingId ? { ...p, ...newPackage } as any : p));
+            } else {
+                // Insert
+                const { data } = await supabase.from('packages').insert({
+                    ...newPackage,
+                    is_active: true,
+                    sort_order: packages.length + 1,
+                }).select().single();
+
+                if (data) {
+                    setPackages(prev => [...prev, data]);
+                } else {
+                    // Fallback for demo mode
+                    setPackages(prev => [...prev, {
+                        ...newPackage,
+                        id: 'temp-' + Date.now(),
+                        is_active: true,
+                        sort_order: packages.length + 1,
+                    } as any]);
+                }
+            }
+        } catch { /* noop */ }
+
+        setSaving(false);
+        resetForm();
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('¿Estás seguro de eliminar este paquete?')) return;
+        try {
+            await supabase.from('packages').delete().eq('id', id);
+            setPackages(prev => prev.filter(p => p.id !== id));
+        } catch { /* noop */ }
+    };
+
+    const toggleActive = async (id: string, current: boolean) => {
+        try {
+            await supabase.from('packages').update({ is_active: !current }).eq('id', id);
+            setPackages(prev => prev.map(p => p.id === id ? { ...p, is_active: !current } : p));
+        } catch { /* noop */ }
+    };
+
+    const getServicesNames = (ids: string[]) => {
+        if (!ids?.length) return 'Ninguno';
+        return ids.map(id => services.find(s => s.id === id)?.name).filter(Boolean).join(', ');
+    };
+
+    if (loading) return <div className="text-center py-12 text-gray-500">Cargando paquetes...</div>;
+
+    return (
+        <div>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                    <Package className="w-5 h-5 text-[var(--gold)]" /> Catálogo de Paquetes
+                </h2>
+                {!showAddForm && (
+                    <button
+                        onClick={() => { resetForm(); setShowAddForm(true); }}
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[var(--gold)]/10 text-[var(--gold)]
+                       text-sm hover:bg-[var(--gold)]/20 transition border border-[var(--gold)]/20"
+                    >
+                        <Plus className="w-4 h-4" /> Nuevo Paquete
+                    </button>
+                )}
+            </div>
+
+            {/* Add/Edit Form */}
+            <AnimatePresence>
+                {showAddForm && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden mb-6"
+                    >
+                        <div className="glass rounded-xl p-6 border border-[var(--gold)]/20">
+                            <div className="flex justify-between items-start mb-4">
+                                <h3 className="text-md font-medium text-[var(--gold)]">
+                                    {editingId ? 'Editar Paquete' : 'Nuevo Paquete'}
+                                </h3>
+                                <button onClick={resetForm}><X className="w-5 h-5 text-gray-400 hover:text-white" /></button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div className="space-y-4">
+                                    <input
+                                        type="text" placeholder="Nombre del Paquete"
+                                        value={formName} onChange={e => setFormName(e.target.value)}
+                                        className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[var(--gold)] focus:outline-none"
+                                    />
+                                    <textarea
+                                        placeholder="Descripción"
+                                        value={formDesc} onChange={e => setFormDesc(e.target.value)}
+                                        className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[var(--gold)] focus:outline-none h-24"
+                                    />
+                                    <div className="flex gap-4">
+                                        <div className="flex-1">
+                                            <label className="text-xs text-gray-400 mb-1 block">Precio (MXN)</label>
+                                            <input
+                                                type="number" placeholder="0.00"
+                                                value={formPrice} onChange={e => setFormPrice(e.target.value)}
+                                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[var(--gold)] focus:outline-none"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <label className="text-xs text-gray-400 mb-1 block">Capacidad (Personas)</label>
+                                            <input
+                                                type="number" placeholder="100"
+                                                value={formGuests} onChange={e => setFormGuests(e.target.value)}
+                                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[var(--gold)] focus:outline-none"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-gray-400 mb-1 block">Tipo de Evento</label>
+                                        <select
+                                            value={formType} onChange={e => setFormType(e.target.value)}
+                                            className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-[var(--gold)] focus:outline-none"
+                                        >
+                                            <option value="general">🎉 General</option>
+                                            <option value="boda">💒 Boda</option>
+                                            <option value="xv">👑 XV Años</option>
+                                            <option value="corporativo">🏢 Corporativo</option>
+                                            <option value="social">🥂 Social</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {/* Service Selector */}
+                                <div className="bg-white/5 rounded-lg p-3 border border-white/10 max-h-[340px] overflow-y-auto custom-scrollbar">
+                                    <h4 className="text-sm font-medium text-gray-300 mb-3 sticky top-0 bg-[#0A0A09] pb-2 border-b border-white/10 z-10">
+                                        Servicios Incluidos
+                                    </h4>
+                                    <div className="space-y-2">
+                                        {services.map(svc => (
+                                            <label key={svc.id} className="flex items-start gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition">
+                                                <div className={`w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 mt-0.5
+                                        ${formServices.includes(svc.id) ? 'bg-[var(--gold)] border-[var(--gold)] text-black' : 'border-gray-500'}`}>
+                                                    {formServices.includes(svc.id) && <Check className="w-3.5 h-3.5" />}
+                                                </div>
+                                                <input
+                                                    type="checkbox"
+                                                    className="hidden"
+                                                    checked={formServices.includes(svc.id)}
+                                                    onChange={() => handleServiceToggle(svc.id)}
+                                                />
+                                                <div>
+                                                    <p className="text-sm text-white font-medium">{svc.name}</p>
+                                                    <p className="text-xs text-gray-500">{formatCurrency(svc.price)}</p>
+                                                </div>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end gap-3 pt-3 border-t border-white/10">
+                                <button
+                                    onClick={resetForm}
+                                    className="px-4 py-2 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleSave}
+                                    disabled={saving || !formName || !formPrice}
+                                    className="px-6 py-2 rounded-lg bg-[var(--gold)] text-[var(--black)] font-bold
+                                     hover:bg-[var(--gold-light)] transition disabled:opacity-50 flex items-center gap-2"
+                                >
+                                    {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                    Guardar Paquete
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Packages List */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {packages.map(pkg => (
+                    <motion.div
+                        key={pkg.id}
+                        layout
+                        className={`glass rounded-xl overflow-hidden group hover:border-[var(--gold)]/30 transition-all ${!pkg.is_active ? 'opacity-60 grayscale' : ''}`}
+                    >
+                        <div className="p-5">
+                            <div className="flex justify-between items-start mb-2">
+                                <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-full border 
+                                    ${pkg.event_type === 'boda' ? 'border-pink-500/30 text-pink-300 bg-pink-500/10' :
+                                        pkg.event_type === 'corporativo' ? 'border-blue-500/30 text-blue-300 bg-blue-500/10' :
+                                            'border-[var(--gold)]/30 text-[var(--gold)] bg-[var(--gold)]/10'}`}>
+                                    {pkg.event_type}
+                                </span>
+                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onClick={() => toggleActive(pkg.id, pkg.is_active)} className="p-1 hover:bg-white/10 rounded">
+                                        {pkg.is_active ? <Eye className="w-4 h-4 text-gray-400" /> : <Ban className="w-4 h-4 text-red-400" />}
+                                    </button>
+                                    <button onClick={() => startEdit(pkg)} className="p-1 hover:bg-white/10 rounded">
+                                        <Pencil className="w-4 h-4 text-[var(--gold)]" />
+                                    </button>
+                                    <button onClick={() => handleDelete(pkg.id)} className="p-1 hover:bg-white/10 rounded">
+                                        <Trash2 className="w-4 h-4 text-red-400" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <h3 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                                {pkg.name}
+                            </h3>
+                            <p className="text-2xl font-semibold text-[var(--gold)] mb-4">{formatCurrency(pkg.total_price)}</p>
+
+                            <p className="text-sm text-gray-400 mb-4 line-clamp-2 min-h-[40px]">
+                                {pkg.description || 'Sin descripción'}
+                            </p>
+
+                            <div className="space-y-2 border-t border-white/10 pt-4">
+                                <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold flex items-center gap-2">
+                                    <Check className="w-3 h-3 text-[var(--gold)]" /> Incluye:
+                                </p>
+                                <div className="flex flex-wrap gap-1">
+                                    {pkg.includes_services?.slice(0, 3).map(svcId => {
+                                        const svc = services.find(s => s.id === svcId);
+                                        return svc ? (
+                                            <span key={svcId} className="text-xs px-2 py-1 rounded bg-white/5 text-gray-300">
+                                                {svc.name}
+                                            </span>
+                                        ) : null;
+                                    })}
+                                    {(pkg.includes_services?.length || 0) > 3 && (
+                                        <span className="text-xs px-2 py-1 rounded bg-white/5 text-gray-500">
+                                            +{pkg.includes_services!.length - 3} más
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-white/5 px-5 py-3 flex justify-between items-center text-xs text-gray-500">
+                            <span className="flex items-center gap-1"><Users className="w-3 h-3" /> Max: {pkg.max_guests} pax</span>
+                            {!pkg.is_active && <span className="text-red-400 flex items-center gap-1"><Ban className="w-3 h-3" /> Inactivo</span>}
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function getDemoPackages(): import('@/lib/supabase').Package[] {
+    return [
+        {
+            id: 'demo-p-1',
+            name: 'Paquete Esencial',
+            description: 'Ideal para eventos íntimos. Incluye renta del jardín y zona techada.',
+            total_price: 25000,
+            event_type: 'general',
+            max_guests: 100,
+            is_active: true,
+            sort_order: 1,
+            includes_services: ['demo-1', 'demo-2'],
+            created_at: new Date().toISOString(),
+        },
+        {
+            id: 'demo-p-2',
+            name: 'Boda de Ensueño',
+            description: 'Todo lo necesario para tu gran día, con iluminación y sonido.',
+            total_price: 45000,
+            event_type: 'boda',
+            max_guests: 200,
+            is_active: true,
+            sort_order: 2,
+            includes_services: ['demo-1', 'demo-2', 'demo-3', 'demo-5'],
+            created_at: new Date().toISOString(),
+        }
+    ];
 }
 
 // ─────────────────────── Demo Data ───────────────────────

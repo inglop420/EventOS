@@ -24,7 +24,7 @@ export function StickyCTA({ onOpenWizard }: { onOpenWizard: () => void }) {
                 >
                     <button
                         onClick={onOpenWizard}
-                        className="w-full py-4 rounded-full text-sm font-bold tracking-wide
+                        className="w-full py-5 rounded-full text-lg font-bold tracking-wide
               bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)]
               text-[var(--bg)] shadow-[0_8px_30px_rgba(0,0,0,0.3)]
               active:scale-[0.98] transition-transform flex items-center justify-center gap-3 border border-[var(--accent-light)]/20"
