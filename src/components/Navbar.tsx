@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Lock } from 'lucide-react';
 
 const navLinks = [
     { label: 'Inicio', href: '#hero' },
@@ -60,6 +60,9 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                     >
                         Agendar Visita
                     </button>
+                    <a href="/admin" className="p-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition" title="Acceso Administrativo">
+                        <Lock className="w-4 h-4" />
+                    </a>
                 </div>
 
                 {/* Mobile menu button */}
@@ -98,6 +101,15 @@ export function Navbar({ onOpenWizard }: { onOpenWizard: () => void }) {
                         >
                             Agendar Visita
                         </button>
+                        <div className="pt-4 mt-2 border-t border-[var(--border)]/30">
+                            <a
+                                href="/admin"
+                                onClick={() => setIsMobileOpen(false)}
+                                className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--accent)]"
+                            >
+                                <Lock className="w-4 h-4" /> Acceso Administrativo
+                            </a>
+                        </div>
                     </div>
                 </motion.div>
             )}

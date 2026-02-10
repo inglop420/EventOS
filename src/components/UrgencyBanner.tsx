@@ -36,11 +36,10 @@ export function UrgencyBanner() {
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    initial={{ x: 400, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 400, opacity: 0 }}
-                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                    className="fixed bottom-48 right-4 md:bottom-8 md:right-8 z-40
+                    initial={{ y: 100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 100, opacity: 0 }}
+                    className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40
                     glass px-5 py-4 rounded-2xl shadow-2xl max-w-sm cursor-pointer border border-[var(--border)]/50
                     hover:scale-105 transition-transform duration-300"
                 >

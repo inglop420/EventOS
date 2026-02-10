@@ -123,7 +123,7 @@ export default function AdminPage() {
             </div>
 
             {/* Content */}
-            <div className="px-4 py-4">
+            <div className="py-4 md:px-4">
                 {activeTab === 'leads' && <LeadsTab />}
                 {activeTab === 'calendar' && <CalendarTab />}
                 {activeTab === 'precios' && <PreciosTab />}
@@ -242,7 +242,7 @@ function LeadsTab() {
     if (loading) return <div className="text-center py-12 text-gray-500">Cargando...</div>;
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 px-3 md:px-0">
             {leads.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">No hay oportunidades aún</div>
             ) : (
@@ -459,8 +459,8 @@ function CalendarTab() {
                 Haz clic en un día para bloquear/desbloquear. Las fechas reservadas no se pueden modificar aquí.
             </p>
 
-            <div className="glass rounded-xl p-4">
-                <div className="flex items-center justify-between mb-4">
+            <div className="glass md:rounded-xl p-1 md:p-4 border-x-0 md:border border-y md:border-y">
+                <div className="flex items-center justify-between mb-4 px-4 md:px-0">
                     <button
                         onClick={() => {
                             const prev = new Date(currentMonth);
@@ -887,41 +887,41 @@ function PreciosTab() {
                             </div>
                         ) : (
                             // Display mode
-                            <div className="flex items-center justify-between">
-                                <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
+                                <div className="flex-1 min-w-0 w-full">
                                     <div className="flex items-center gap-2">
-                                        <p className="font-medium text-white truncate">{service.name}</p>
+                                        <p className="font-medium text-white truncate text-base sm:text-sm">{service.name}</p>
                                         <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-400 whitespace-nowrap">
                                             {getCategoryLabel(service.category)}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3 ml-3">
-                                    <span className="text-[var(--gold)] font-bold whitespace-nowrap">
+                                <div className="flex items-center justify-between sm:justify-end gap-5 ml-0 sm:ml-3 w-full sm:w-auto mt-2 sm:mt-0">
+                                    <span className="text-[var(--gold)] font-bold whitespace-nowrap text-lg sm:text-base">
                                         {formatCurrency(service.price)}
                                     </span>
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-3">
                                         <button
                                             onClick={() => toggleActive(service.id, service.is_active)}
-                                            className={`p-1.5 rounded-lg transition ${service.is_active
+                                            className={`p-3 sm:p-1.5 rounded-lg transition ${service.is_active
                                                 ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
                                                 : 'bg-gray-500/20 text-gray-500 hover:bg-gray-500/30'
                                                 }`}
                                             title={service.is_active ? 'Activo — clic para desactivar' : 'Inactivo — clic para activar'}
                                         >
-                                            {service.is_active ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                                            {service.is_active ? <Check className="w-4 h-4 sm:w-3 sm:h-3" /> : <X className="w-4 h-4 sm:w-3 sm:h-3" />}
                                         </button>
                                         <button
                                             onClick={() => startEdit(service)}
-                                            className="p-1.5 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition"
+                                            className="p-3 sm:p-1.5 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition"
                                         >
-                                            <Pencil className="w-3 h-3" />
+                                            <Pencil className="w-5 h-5 sm:w-3 sm:h-3" />
                                         </button>
                                         <button
                                             onClick={() => deleteService(service.id)}
-                                            className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition"
+                                            className="p-3 sm:p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition"
                                         >
-                                            <Trash2 className="w-3 h-3" />
+                                            <Trash2 className="w-5 h-5 sm:w-3 sm:h-3" />
                                         </button>
                                     </div>
                                 </div>
@@ -1081,7 +1081,7 @@ function PackagesTab() {
     if (loading) return <div className="text-center py-12 text-gray-500">Cargando paquetes...</div>;
 
     return (
-        <div>
+        <div className="px-3 md:px-0">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-white flex items-center gap-2">
